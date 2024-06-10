@@ -1,0 +1,25 @@
+
+image: aleredzz/public:hello-world
+namespace: hello-world
+host: "dash.redzz.io"
+ingress:
+  enable: true
+languages:
+  - language: en
+    env:
+    - name: HELLO_VALUE
+      value: "Hello"
+    - name: WORLD_VALUE
+      value: "World"
+  - language: es
+    env:
+    - name: HELLO_VALUE
+      value: 'Hola'
+    - name: WORLD_VALUE
+      value: 'Mundo'
+  - language: nl
+    env:
+    - name: HELLO_VALUE
+      value: 'Hallo'
+    - name: WORLD_VALUE
+      value: 'Wereld'

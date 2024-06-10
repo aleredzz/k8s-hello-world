@@ -1,0 +1,17 @@
+FROM python:3.12-alpine
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY requirements.txt . 
+
+RUN pip install -r requirements.txt
+
+COPY app.py . 
+
+ENV HELLO_VALUE 'World'
+
+ENV WORLD_VALUE 'Hello'
+
+ENTRYPOINT [ "flask",  "run", "--host=0.0.0.0" ]

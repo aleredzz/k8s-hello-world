@@ -1,0 +1,15 @@
+{{- range $item :=  .Values.languages }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "svc-{{ $item.language }}"
+  namespace: "{{ $.Values.namespace }}"
+spec:
+  selector:
+    app: "hello-world-{{ $item.language }}"
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+{{- end }}

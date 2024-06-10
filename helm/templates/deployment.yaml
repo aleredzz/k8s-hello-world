@@ -1,0 +1,28 @@
+{{- range $item :=  .Values.languages }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: "{{ $.Release.Name }}-hello-world-{{ $item.language }}"
+    namespace: "{{ $.Values.namespace }}"
+    labels:
+      app: "hello-world-{{ $item.language }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "hello-world-{{ $item.language }}"
+  template:
+    metadata:
+      labels:
+        app: "hello-world-{{ $item.language }}"
+    spec:
+      containers:
+        - name: "hello-world-{{ $item.language }}"
+          image: {{ $.Values.image }}
+          env: {{- with $item.env }}  
+            {{- toYaml . | nindent 12 }}
+            {{- end }} 
+          ports:
+            - containerPort: 5000
+{{- end }} 

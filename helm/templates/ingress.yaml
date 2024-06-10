@@ -1,0 +1,25 @@
+
+{{-  if .Values.ingress.enable }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world-multilanguage-ingress
+  namespace: "{{ $.Values.namespace }}"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "{{ $.Values.host }}"
+    http:
+      paths:
+      {{- range $item :=  .Values.languages }}
+      - path: "/hello-world/{{ $item.language }}"
+        pathType: Prefix
+        backend:
+          service:
+            name: "svc-{{ $item.language }}"
+            port:
+              number: 80
+        {{- end }}
+{{ end }}
